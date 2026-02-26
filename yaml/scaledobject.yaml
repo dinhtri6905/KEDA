@@ -1,0 +1,70 @@
+# --- Scale Rule cho Queue 1 ---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: scaler-q1
+  namespace: messaging
+spec:
+  scaleTargetRef:
+    name: consumer-q1
+  minReplicaCount: 0
+  maxReplicaCount: 20
+  pollingInterval: 5
+  cooldownPeriod: 150
+  triggers:
+    - type: rabbitmq
+      metadata:
+        hostFromEnv: RABBITMQ_API_URL
+        protocol: auto
+        mode: QueueLength
+        value: "20"
+        queueName: queue1
+        activationTargetValue: "1"
+
+---
+# --- Scale Rule cho Queue 2 ---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: scaler-q2
+  namespace: messaging
+spec:
+  scaleTargetRef:
+    name: consumer-q2
+  minReplicaCount: 0
+  maxReplicaCount: 20
+  pollingInterval: 5
+  cooldownPeriod: 150
+  triggers:
+    - type: rabbitmq
+      metadata:
+        hostFromEnv: RABBITMQ_API_URL
+        protocol: auto
+        mode: QueueLength
+        value: "20"
+        queueName: queue2
+        activationTargetValue: "1"
+
+---
+# --- Scale Rule cho Queue 3 ---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: scaler-q3
+  namespace: messaging
+spec:
+  scaleTargetRef:
+    name: consumer-q3
+  minReplicaCount: 0
+  maxReplicaCount: 20
+  pollingInterval: 5
+  cooldownPeriod: 150
+  triggers:
+    - type: rabbitmq
+      metadata:
+        hostFromEnv: RABBITMQ_API_URL
+        protocol: auto
+        mode: QueueLength
+        value: "20"
+        queueName: queue3
+        activationTargetValue: "1"

@@ -1,0 +1,80 @@
+# --- Consumer cho Queue 1 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-q1
+  namespace: messaging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: consumer-q1
+  template:
+    metadata:
+      labels:
+        app: consumer-q1
+    spec:
+      containers:
+        - name: consumer
+          image: dinhtri69/rabbitmq-consumer-test:latest
+          env:
+            - name: RABBITMQ_HOST
+              value: "amqp://admin:admin@rabbitmq.messaging.svc.cluster.local:5672/%2F"
+            - name: RABBITMQ_API_URL
+              value: "http://admin:admin@rabbitmq.messaging.svc.cluster.local:15672"
+            - name: QUEUE_NAME
+              value: "queue1"
+---
+# --- Consumer cho Queue 2 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-q2
+  namespace: messaging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: consumer-q2
+  template:
+    metadata:
+      labels:
+        app: consumer-q2
+    spec:
+      containers:
+        - name: consumer
+          image: dinhtri69/rabbitmq-consumer-test:latest
+          env:
+            - name: RABBITMQ_HOST
+              value: "amqp://admin:admin@rabbitmq.messaging.svc.cluster.local:5672/%2F"
+            - name: RABBITMQ_API_URL
+              value: "http://admin:admin@rabbitmq.messaging.svc.cluster.local:15672"
+            - name: QUEUE_NAME
+              value: "queue2"
+---
+# --- Consumer cho Queue 3 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer-q3
+  namespace: messaging
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: consumer-q3
+  template:
+    metadata:
+      labels:
+        app: consumer-q3
+    spec:
+      containers:
+        - name: consumer
+          image: dinhtri69/rabbitmq-consumer-test:latest
+          env:
+            - name: RABBITMQ_HOST
+              value: "amqp://admin:admin@rabbitmq.messaging.svc.cluster.local:5672/%2F"
+            - name: RABBITMQ_API_URL
+              value: "http://admin:admin@rabbitmq.messaging.svc.cluster.local:15672"
+            - name: QUEUE_NAME
+              value: "queue3"
