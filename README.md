@@ -9,6 +9,16 @@ Hệ thống bao gồm:
 - Giám sát qua Prometheus + Grafana
 - Script gửi message từ local với tốc độ kiểm soát (round-robin vào 3 queue)
 
+## Công nghệ sử dụng
+| Nhóm                 | Công nghệ chính                                      | Vai trò chính                                   |
+|----------------------|------------------------------------------------------|--------------------------------------------------|
+| Orchestration        | Kubernetes                                           | Quản lý container & autoscaling native          |
+| Event-driven Scaling | KEDA + HPA                                           | Scale dựa trên queue length                     |
+| Message Queue        | RabbitMQ (3-management + prometheus plugin)        | Lưu trữ & phân phối message                     |
+| Monitoring           | Prometheus + Grafana + ServiceMonitor              | Thu thập & hiển thị metrics                     |
+| Application          | Python 3.11 + pika                                  | Xử lý message (consumer)                        |
+| Deployment           | Docker                                               | Build image consumer                            |
+
 ## Cấu trúc thư mục
 ```
 KEDA/
@@ -29,7 +39,6 @@ KEDA/
 ├── grafana-dashboard.json       # Dashboard Grafana (queue length, replicas, CPU/memory)
 └── README.md                    # Hướng dẫn
 ```
-
 
 ## Yêu cầu trước khi bắt đầu
 
@@ -156,7 +165,7 @@ kubectl get hpa -n messaging -w
 ```
 
 ### 11. Giám sát qua Grafana
-Truy cập Grafana → Import → Upload JSON file → chọn grafana-dashboard.json
+Truy cập Grafana → Import → Upload JSON file → chọn grafana-dashboard.json.
 Hoặc dùng dashboard ID 10991 (RabbitMQ official) và tùy chỉnh thêm panel nếu cần
 
 ## Dọn dẹp
