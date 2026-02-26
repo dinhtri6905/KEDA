@@ -41,6 +41,25 @@ KEDA/
 ### 1. Tạo namespace
 ```bash
 kubectl create namespace messaging
+```
 
-### 
+### 2. Cài đặt KEDA
+```bash
+helm repo add kedacore https://kedacore.github.io/charts
+helm repo update
+
+helm install keda kedacore/keda --namespace keda --create-namespace
+```
+#### Kiểm tra
+```bash
+kubectl get pods -n keda
+```
+
+### 3. Triển khai RabbitMQ
+```bash
+kubectl apply -f yaml/rabbitmq-deploy.yaml
+kubectl apply -f yaml/rabbitmq-svc.yaml
+
+# Theo dõi pod
+kubectl get pods -n messaging -w
 ```
